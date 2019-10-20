@@ -1,7 +1,10 @@
 # Staffjoy教学版
-微服务和云原生架构教学案例项目，基于Spring Boot和Kubernetes技术栈
 
-<img src="doc/images/bobo_promote.jpg" width="500" height="400">
+## 注明
+
+本仓库拉取极客时间的 Staffjoy教学版代码用于个人爱好学习，请勿用于商业用途，支持正版
+
+微服务和云原生架构教学案例项目，基于Spring Boot和Kubernetes技术栈
 
 ## 课程资料PPT
 1. 第1章 [课程介绍和案例需求](https://github.com/spring2go/staffjoy-ppt/blob/master/doc/ppts/Chapter_01.pdf)
