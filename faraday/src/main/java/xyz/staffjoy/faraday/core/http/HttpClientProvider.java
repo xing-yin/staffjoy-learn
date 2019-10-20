@@ -14,9 +14,14 @@ import static java.util.stream.Collectors.toMap;
 import static org.apache.http.impl.client.HttpClientBuilder.create;
 
 public class HttpClientProvider {
+
+    /**
+     * 就是一个 hashmap 的实现，使用 RestTemplate 访问目标服务
+     */
     protected Map<String, RestTemplate> httpClients = new HashMap<>();
 
     public void updateHttpClients(List<MappingProperties> mappings) {
+        // 根据 路由表创建 HttpClient 映射表
         httpClients = mappings.stream().collect(toMap(MappingProperties::getName, this::createRestTemplate));
     }
 

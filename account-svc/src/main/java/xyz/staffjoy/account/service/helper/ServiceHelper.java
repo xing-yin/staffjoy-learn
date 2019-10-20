@@ -45,6 +45,11 @@ public class ServiceHelper {
 
     private final EnvConfig envConfig;
 
+    /**
+     * 注意⚠️：异步操作不能放在调用异步方法的bean内部！！！必须分开
+     *
+     * @param userId
+     */
     @Async(AppConfig.ASYNC_EXECUTOR_NAME)
     public void syncUserAsync(String userId) {
         if (envConfig.isDebug()) {
@@ -67,7 +72,7 @@ public class ServiceHelper {
         GetWorkerOfResponse workerOfResponse = null;
         try {
             workerOfResponse = companyClient.getWorkerOf(AuthConstant.AUTHORIZATION_ACCOUNT_SERVICE, userId);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             String errMsg = "could not fetch workOfList";
             handleException(logger, ex, errMsg);
             throw new ServiceException(errMsg, ex);
@@ -79,7 +84,7 @@ public class ServiceHelper {
         WorkerOfList workerOfList = workerOfResponse.getWorkerOfList();
 
         boolean isWorker = workerOfList.getTeams().size() > 0;
-        for(TeamDto teamDto : workerOfList.getTeams()) {
+        for (TeamDto teamDto : workerOfList.getTeams()) {
             GenericCompanyResponse genericCompanyResponse = null;
             try {
                 genericCompanyResponse = companyClient.getCompany(AuthConstant.AUTHORIZATION_ACCOUNT_SERVICE, teamDto.getCompanyId());
@@ -114,7 +119,7 @@ public class ServiceHelper {
         AdminOfList adminOfList = getAdminOfResponse.getAdminOfList();
 
         boolean isAdmin = adminOfList.getCompanies().size() > 0;
-        for(CompanyDto companyDto : adminOfList.getCompanies()) {
+        for (CompanyDto companyDto : adminOfList.getCompanies()) {
             memberships.put(companyDto.getId(), companyDto);
         }
 
@@ -133,7 +138,7 @@ public class ServiceHelper {
         user.addCustomAttribute(CustomAttribute.newBooleanAttribute("is_admin", isAdmin));
         user.addCustomAttribute(CustomAttribute.newBooleanAttribute("is_staffjoy_support", account.isSupport()));
 
-        for(CompanyDto companyDto : memberships.values()) {
+        for (CompanyDto companyDto : memberships.values()) {
             user.addCompany(new io.intercom.api.Company().setCompanyID(companyDto.getId()).setName(companyDto.getName()));
         }
 

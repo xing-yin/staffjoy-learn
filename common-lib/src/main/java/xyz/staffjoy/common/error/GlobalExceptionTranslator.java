@@ -22,6 +22,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.Set;
 
+/**
+ * 自定义框架统一异常处理类
+ */
 @RestControllerAdvice
 public class GlobalExceptionTranslator {
 
@@ -148,6 +151,12 @@ public class GlobalExceptionTranslator {
                 .build();
     }
 
+    /**
+     * 总入口，如果其他没有捕获特定异常，此方法处理
+     *
+     * @param e
+     * @return
+     */
     @ExceptionHandler(Throwable.class)
     public BaseResponse handleError(Throwable e) {
         logger.error("Internal Server Error", e);

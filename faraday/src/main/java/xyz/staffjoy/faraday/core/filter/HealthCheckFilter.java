@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class HealthCheckFilter extends OncePerRequestFilter {
-    // HEALTH_CHECK_PATH is the standard healthcheck path in our app
+
+    /**
+     * HEALTH_CHECK_PATH is the standard healthcheck path in our app
+     */
     static final String HEALTH_CHECK_PATH = "/health";
 
     @Override

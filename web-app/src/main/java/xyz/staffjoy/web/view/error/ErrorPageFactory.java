@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import xyz.staffjoy.web.config.AssetLoader;
 
+/**
+ * 错误页面工厂
+ */
 @Component
 public class ErrorPageFactory {
 

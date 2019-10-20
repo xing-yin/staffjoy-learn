@@ -20,10 +20,16 @@ public class AppConfig {
 
     public static final String ASYNC_EXECUTOR_NAME = "asyncExecutor";
 
-    @Bean(name=ASYNC_EXECUTOR_NAME)
+    /**
+     * 配置一个线程池处理异步的调用
+     *
+     * @return
+     */
+    @Bean(name = ASYNC_EXECUTOR_NAME)
     public Executor asyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         // for passing in request scope context
+        // 因为异步调用会丢失上下文，所以异步调用如果需要上下文，就要拷贝上下文信息，如用户信息
         executor.setTaskDecorator(new ContextCopyingDecorator());
         executor.setCorePoolSize(3);
         executor.setMaxPoolSize(5);

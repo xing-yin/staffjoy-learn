@@ -12,6 +12,9 @@ public class EnvConfig {
 
     private String name;
     private boolean debug;
+    /**
+     * 根域名
+     */
     private String externalApex;
     private String internalApex;
     private String scheme;
@@ -22,6 +25,7 @@ public class EnvConfig {
 
     static {
         map = new HashMap<String, EnvConfig>();
+
         EnvConfig envConfig = EnvConfig.builder().name(EnvConstant.ENV_DEV)
                 .debug(true)
                 .externalApex("staffjoy-v2.local")

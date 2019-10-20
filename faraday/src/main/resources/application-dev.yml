@@ -2,14 +2,18 @@ server:
   port: 80
 
 
+# 静态路由配置
 faraday:
   enable_programmatic_mapping: false
   tracing:
     enabled: false
   mappings:
     -
+      # 路由的名称
       name: faraday_route
+      # 主机头
       host: faraday.staffjoy-v2.local
+      # 目标地址
       destinations: httpbin.org
     -
       name: account_route
@@ -27,6 +31,7 @@ faraday:
       name: whoami_route
       host: whoami.staffjoy-v2.local
       destinations: localhost:8084
+      # 超时配置
       timeout:
         connect: 10000
         read: 10000

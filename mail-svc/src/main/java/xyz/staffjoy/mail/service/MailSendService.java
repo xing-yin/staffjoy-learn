@@ -32,10 +32,15 @@ public class MailSendService {
     @Autowired
     SentryClient sentryClient;
 
+    /**
+     * 异步调用
+     *
+     * @param req
+     */
     @Async(AppConfig.ASYNC_EXECUTOR_NAME)
     public void sendMailAsync(EmailRequest req) {
         IToLog logContext = () -> {
-            return new Object[] {
+            return new Object[]{
                     "subject", req.getSubject(),
                     "to", req.getTo(),
                     "html_body", req.getHtmlBody()

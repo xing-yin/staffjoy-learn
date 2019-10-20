@@ -9,14 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 基于静态配置的路由映射
+ */
 public class ConfigurationMappingsProvider extends MappingsProvider {
 
     public ConfigurationMappingsProvider(
             ServerProperties serverProperties,
             FaradayProperties faradayProperties,
             MappingsValidator mappingsValidator,
-            HttpClientProvider httpClientProvider
-    ) {
+            HttpClientProvider httpClientProvider) {
         super(serverProperties, faradayProperties,
                 mappingsValidator, httpClientProvider);
     }

@@ -58,18 +58,32 @@ public class RequestForwarder {
         this.postForwardResponseInterceptor = postForwardResponseInterceptor;
     }
 
+    /**
+     * 请求转发
+     * @param data
+     * @param traceId
+     * @param mapping
+     * @return
+     */
     public ResponseEntity<byte[]> forwardHttpRequest(RequestData data, String traceId, MappingProperties mapping) {
+        // 解析目标地址
         ForwardDestination destination = resolveForwardDestination(data.getUri(), mapping);
+        // 处理一些 header
         prepareForwardedRequestHeaders(data, destination);
         traceInterceptor.onForwardStart(traceId, destination.getMappingName(),
                 data.getMethod(), data.getHost(), destination.getUri().toString(),
                 data.getBody(), data.getHeaders());
         RequestEntity<byte[]> request = new RequestEntity<>(data.getBody(), data.getHeaders(), data.getMethod(), destination.getUri());
+
+        // 发送请求：找到 HttpClient 中对应的 RestTemplate,发送
         ResponseData response = sendRequest(traceId, request, mapping, destination.getMappingMetricsName(), data);
 
         log.debug(String.format("Forwarded: %s %s %s -> %s %d", data.getMethod(), data.getHost(), data.getUri(), destination.getUri(), response.getStatus().value()));
 
+        // 做一些后置的处理
         traceInterceptor.onForwardComplete(traceId, response.getStatus(), response.getBody(), response.getHeaders());
+
+        // 【响应拦截器】
         postForwardResponseInterceptor.intercept(response, mapping);
         prepareForwardedResponseHeaders(response);
 
@@ -124,6 +138,7 @@ public class RequestForwarder {
         ResponseEntity<byte[]> response;
         long startingTime = nanoTime();
         try {
+            // 找到 HttpClient 中对应的 RestTemplate,转发（exchange 动作）
             response = httpClientProvider.getHttpClient(mapping.getName()).exchange(request, byte[].class);
             recordLatency(mappingMetricsName, startingTime);
         } catch (HttpStatusCodeException e) {

@@ -1,19 +1,24 @@
 package xyz.staffjoy.account.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.staffjoy.account.AccountConstant;
 import xyz.staffjoy.account.dto.*;
 import xyz.staffjoy.common.api.BaseResponse;
 import xyz.staffjoy.common.auth.AuthConstant;
-import xyz.staffjoy.common.validation.Group1;
 import xyz.staffjoy.common.validation.PhoneNumber;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Fegin:
+ *
+ * @FeignClient: 表示运行时 spring 会扫描并转换为强类型的客户端
+ * <p>
+ * 是一个接口
+ */
 @FeignClient(name = AccountConstant.SERVICE_NAME, path = "/v1/account", url = "${staffjoy.account-service-endpoint}")
 // TODO Client side validation can be enabled as needed
 // @Validated
@@ -32,7 +37,7 @@ public interface AccountClient {
     ListAccountResponse listAccounts(@RequestHeader(AuthConstant.AUTHORIZATION_HEADER) String authz, @RequestParam int offset, @RequestParam @Min(0) int limit);
 
     // GetOrCreate is for internal use by other APIs to match a user based on their phonenumber or email.
-    @PostMapping(path= "/get_or_create")
+    @PostMapping(path = "/get_or_create")
     GenericAccountResponse getOrCreateAccount(@RequestHeader(AuthConstant.AUTHORIZATION_HEADER) String authz, @RequestBody @Valid GetOrCreateRequest request);
 
     @GetMapping(path = "/get")

@@ -11,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.Instant;
 
+/**
+ * 数据模型对象:DMO
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

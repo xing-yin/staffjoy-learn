@@ -39,6 +39,13 @@ public class GlobalErrorController implements ErrorController {
         return "/error";
     }
 
+    /**
+     * 处理错误，定制错误页面(见 templates下的定制错误页面)
+     *
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {
 
@@ -46,17 +53,18 @@ public class GlobalErrorController implements ErrorController {
         Object exception = request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
 
         ErrorPage errorPage = null;
-        if (statusCode != null && (Integer)statusCode == HttpStatus.NOT_FOUND.value()) {
+        if (statusCode != null && (Integer) statusCode == HttpStatus.NOT_FOUND.value()) {
             errorPage = errorPageFactory.buildNotFoundPage();
         } else {
             errorPage = errorPageFactory.buildInternalServerErrorPage();
         }
 
         if (exception != null) {
-            if (envConfig.isDebug()) {  // no sentry aop in debug mode
+            // no sentry aop in debug mode
+            if (envConfig.isDebug()) {
                 logger.error("Global error handling", exception);
             } else {
-                sentryClient.sendException((Exception)exception);
+                sentryClient.sendException((Exception) exception);
                 UUID uuid = sentryClient.getContext().getLastEventId();
                 errorPage.setSentryErrorId(uuid.toString());
                 errorPage.setSentryPublicDsn(staffjoyProps.getSentryDsn());

@@ -7,6 +7,7 @@ import xyz.staffjoy.faraday.core.http.ResponseData;
 import java.util.List;
 
 public class CacheResponseInterceptor implements PostForwardResponseInterceptor {
+
     @Override
     public void intercept(ResponseData data, MappingProperties mapping) {
         HttpHeaders respHeaders = data.getHeaders();

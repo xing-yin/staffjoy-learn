@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 可编程方式的路由映射
+ */
 public class ProgrammaticMappingsProvider extends MappingsProvider {
     protected final EnvConfig envConfig;
 
@@ -36,8 +39,9 @@ public class ProgrammaticMappingsProvider extends MappingsProvider {
     @Override
     protected List<MappingProperties> retrieveMappings() {
         List<MappingProperties> mappings = new ArrayList<>();
+        // 一开始就规范好的服务名称
         Map<String, Service> serviceMap = ServiceDirectory.getMapping();
-        for(String key : serviceMap.keySet()) {
+        for (String key : serviceMap.keySet()) {
             String subDomain = key.toLowerCase();
             Service service = serviceMap.get(key);
             MappingProperties mapping = new MappingProperties();

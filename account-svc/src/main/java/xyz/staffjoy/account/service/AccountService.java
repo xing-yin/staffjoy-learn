@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import xyz.staffjoy.account.AccountConstant;
 import xyz.staffjoy.account.dto.AccountDto;
+import xyz.staffjoy.account.dto.AccountList;
 import xyz.staffjoy.account.model.Account;
 import xyz.staffjoy.account.model.AccountSecret;
 import xyz.staffjoy.account.props.AppProps;
-import xyz.staffjoy.account.dto.AccountList;
 import xyz.staffjoy.account.repo.AccountRepo;
 import xyz.staffjoy.account.repo.AccountSecretRepo;
 import xyz.staffjoy.account.service.helper.ServiceHelper;
@@ -36,11 +36,14 @@ import javax.persistence.PersistenceContext;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * 备注点：
+ * 1.使用 ModelMapper 自动将 DMO 与 DTO 互相转换
+ */
 @Service
 @RequiredArgsConstructor
 public class AccountService {
@@ -321,7 +324,7 @@ public class AccountService {
         String newEmail = email.toLowerCase().trim();
 
         Account account = accountRepo.findAccountByEmail(email);
-        if(account == null) {
+        if (account == null) {
             throw new ServiceException(ResultCode.NOT_FOUND, "No user with that email exists");
         }
 
@@ -378,7 +381,7 @@ public class AccountService {
         String token = null;
         try {
             token = Sign.generateEmailConfirmationToken(userId, email, appProps.getSigningSecret());
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             String errMsg = "Could not create token";
             serviceHelper.handleException(logger, ex, errMsg);
             throw new ServiceException(errMsg, ex);
@@ -437,6 +440,12 @@ public class AccountService {
         serviceHelper.syncUserAsync(userId);
     }
 
+    /**
+     * 使用 ModelMapper 自动将 DMO 转换为 DTO
+     *
+     * @param account
+     * @return
+     */
     private AccountDto convertToDto(Account account) {
         return modelMapper.map(account, AccountDto.class);
     }

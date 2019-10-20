@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+/**
+ * 路由映射表的实现超类
+ */
 public abstract class MappingsProvider {
 
     private static final ILogger log = SLoggerFactory.getLogger(MappingsProvider.class);
@@ -28,14 +31,20 @@ public abstract class MappingsProvider {
             ServerProperties serverProperties,
             FaradayProperties faradayProperties,
             MappingsValidator mappingsValidator,
-            HttpClientProvider httpClientProvider
-    ) {
+            HttpClientProvider httpClientProvider) {
         this.serverProperties = serverProperties;
         this.faradayProperties = faradayProperties;
         this.mappingsValidator = mappingsValidator;
         this.httpClientProvider = httpClientProvider;
     }
 
+    /**
+     * 解析目的对象的信息
+     *
+     * @param originHost
+     * @param request
+     * @return
+     */
     public MappingProperties resolveMapping(String originHost, HttpServletRequest request) {
         if (shouldUpdateMappings(request)) {
             updateMappings();
@@ -49,15 +58,25 @@ public abstract class MappingsProvider {
         return resolvedMappings.get(0);
     }
 
+    /**
+     * 更新路由表
+     */
     @PostConstruct
     protected synchronized void updateMappings() {
         List<MappingProperties> newMappings = retrieveMappings();
         mappingsValidator.validate(newMappings);
         mappings = newMappings;
+        // 更新 HttpClients 路由表
         httpClientProvider.updateHttpClients(mappings);
         log.info("Destination mappings updated", mappings);
     }
 
+    /**
+     * 是否要更新映射
+     *
+     * @param request
+     * @return
+     */
     protected abstract boolean shouldUpdateMappings(HttpServletRequest request);
 
     protected abstract List<MappingProperties> retrieveMappings();

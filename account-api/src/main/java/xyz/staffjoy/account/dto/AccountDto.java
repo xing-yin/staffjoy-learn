@@ -12,6 +12,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
+/**
+ * 数据传输对象:DTO
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

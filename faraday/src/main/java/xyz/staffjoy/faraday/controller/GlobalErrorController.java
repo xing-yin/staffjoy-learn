@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.SocketTimeoutException;
 import java.util.UUID;
 
+/**
+ * 统一错误处理
+ */
 @Controller
 @SuppressWarnings(value = "Duplicates")
 public class GlobalErrorController implements ErrorController {
@@ -49,7 +52,7 @@ public class GlobalErrorController implements ErrorController {
             errorPage = errorPageFactory.buildForbiddenErrorPage();
         } else if (exception instanceof ResourceAccessException) {
             ResourceAccessException resourceAccessException =
-                    (ResourceAccessException)exception;
+                    (ResourceAccessException) exception;
             if (resourceAccessException.contains(SocketTimeoutException.class)) {
                 errorPage = errorPageFactory.buildTimeoutErrorPage();
             }
@@ -63,7 +66,7 @@ public class GlobalErrorController implements ErrorController {
             if (envConfig.isDebug()) {  // no sentry in debug mode
                 logger.error("Global error handling", exception);
             } else {
-                sentryClient.sendException((Exception)exception);
+                sentryClient.sendException((Exception) exception);
                 UUID uuid = sentryClient.getContext().getLastEventId();
                 errorPage.setSentryErrorId(uuid.toString());
                 errorPage.setSentryPublicDsn(staffjoyProps.getSentryDsn());

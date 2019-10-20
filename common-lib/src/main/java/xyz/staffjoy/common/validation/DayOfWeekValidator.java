@@ -12,7 +12,10 @@ public class DayOfWeekValidator implements ConstraintValidator<DayOfWeek, String
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) return true; // can be null
+        if (value == null) {
+            // can be null
+            return true;
+        }
         String input = value.trim().toLowerCase();
         if (daysOfWeek.contains(input)) {
             return true;

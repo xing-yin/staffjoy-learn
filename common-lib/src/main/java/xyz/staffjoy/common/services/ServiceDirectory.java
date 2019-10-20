@@ -13,6 +13,10 @@ import java.util.TreeMap;
  *
  * KEEP THIS LIST IN ALPHABETICAL ORDER PLEASE
  */
+
+/**
+ * 一开始就规范好的服务名称
+ */
 public class ServiceDirectory {
 
     private static Map<String, Service> serviceMap;
