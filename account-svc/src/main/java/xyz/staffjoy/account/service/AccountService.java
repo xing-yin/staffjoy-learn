@@ -48,6 +48,9 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class AccountService {
 
+    /**
+     * 结构化日志和审计日志
+     */
     static ILogger logger = SLoggerFactory.getLogger(AccountService.class);
 
     private final AccountRepo accountRepo;
@@ -151,7 +154,7 @@ public class AccountService {
         }
 
         // todo - sms onboarding (if worker??)
-
+        // 审计日志
         LogEntry auditLog = LogEntry.builder()
                 .authorization(AuthContext.getAuthz())
                 .currentUserId(AuthContext.getUserId())
@@ -255,7 +258,6 @@ public class AccountService {
                 .originalContents(existingAccount.toString())
                 .updatedContents(newAccount.toString())
                 .build();
-
         logger.info("updated account", auditLog);
 
         // If account is being activated, or if phone number is changed by current user - send text

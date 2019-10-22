@@ -43,12 +43,19 @@ public class StaffjoyConfig implements WebMvcConfigurer {
         return EnvConfig.getEnvConfg(activeProfile);
     }
 
+    /**
+     * sentry
+     * @return
+     */
     @Bean
     public SentryClient sentryClient() {
 
+        // 注册 sentry 后可以拿到的 dsn
         SentryClient sentryClient = Sentry.init(staffjoyProps.getSentryDsn());
         sentryClient.setEnvironment(activeProfile);
+        // 当前的版本
         sentryClient.setRelease(staffjoyProps.getDeployEnv());
+        // 加一个 tag
         sentryClient.addTag("service", appName);
 
         return sentryClient;
@@ -66,10 +73,11 @@ public class StaffjoyConfig implements WebMvcConfigurer {
 
     @PostConstruct
     public void init() {
+        // 初始化 结构化日志
         // init structured logging
         StructLog4J.setFormatter(JsonFormatter.getInstance());
 
-        // global log fields setting
+        // global log fields setting：设置公共字段
         StructLog4J.setMandatoryContextSupplier(() -> new Object[]{
                 "env", activeProfile,
                 "service", appName});

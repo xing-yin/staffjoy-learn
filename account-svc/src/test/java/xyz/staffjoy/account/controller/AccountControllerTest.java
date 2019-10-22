@@ -35,7 +35,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
+// 启用 mvc,使用默认端口(8080)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+// 因为需要使用 AccountClient
 @EnableFeignClients(basePackages = {"xyz.staffjoy.account.client"})
 @Import(TestConfig.class)
 @Slf4j
@@ -63,7 +65,7 @@ public class AccountControllerTest {
 
     @Before
     public void setUp() {
-        // sanity check
+        // sanity check：合理性检查
         accountRepo.deleteAll();
         // clear CURRENT_USER_HEADER for testing
         TestConfig.TEST_USER_ID = null;
@@ -498,7 +500,7 @@ public class AccountControllerTest {
 
     @Test
     public void testUpdateAccount() {
-        // arrange mock
+        // arrange mock:装配好正常的响应
         when(mailClient.send(any(EmailRequest.class))).thenReturn(BaseResponse.builder().message("email sent").build());
         when(botClient.sendSmsGreeting(any(GreetingRequest.class))).thenReturn(BaseResponse.builder().message("sms sent").build());
 
@@ -554,13 +556,13 @@ public class AccountControllerTest {
         assertThat(genericAccountResponse.isSuccess()).isTrue();
         AccountDto accountDto = genericAccountResponse.getAccount();
 
-        // get account fail
+        // get account fail：错误设置测试
         genericAccountResponse = accountClient.getAccount(AuthConstant.AUTHORIZATION_AUTHENTICATED_USER, accountDto.getId());
         log.info(genericAccountResponse.toString());
         assertThat(genericAccountResponse.isSuccess()).isFalse();
         assertThat(genericAccountResponse.getCode()).isEqualTo(ResultCode.FAILURE);
 
-        // get account success
+        // get account success：成功设置测试
         genericAccountResponse = accountClient.getAccount(AuthConstant.AUTHORIZATION_WHOAMI_SERVICE, accountDto.getId());
         log.info(genericAccountResponse.toString());
         assertThat(genericAccountResponse.isSuccess()).isTrue();

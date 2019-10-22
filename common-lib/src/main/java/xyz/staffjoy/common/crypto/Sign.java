@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * jwt 签名相关
+ */
 public class Sign {
 
     public static final String CLAIM_EMAIL = "email";
@@ -21,13 +24,21 @@ public class Sign {
     private static Map<String, JWTVerifier> verifierMap = new HashMap<>();
     private static Map<String, Algorithm> algorithmMap = new HashMap<>();
 
+    /**
+     * 获取加密算法
+     *
+     * @param signingToken
+     * @return
+     */
     private static Algorithm getAlgorithm(String signingToken) {
         Algorithm algorithm = algorithmMap.get(signingToken);
         if (algorithm == null) {
             synchronized (algorithmMap) {
                 algorithm = algorithmMap.get(signingToken);
                 if (algorithm == null) {
+                    // hmac512算法
                     algorithm = Algorithm.HMAC512(signingToken);
+                    // 缓存
                     algorithmMap.put(signingToken, algorithm);
                 }
             }
@@ -53,6 +64,13 @@ public class Sign {
         return verifyToken(tokenString, signingToken);
     }
 
+    /**
+     * 校验算法
+     *
+     * @param tokenString
+     * @param signingToken
+     * @return
+     */
     static DecodedJWT verifyToken(String tokenString, String signingToken) {
         JWTVerifier verifier = verifierMap.get(signingToken);
         if (verifier == null) {
@@ -70,12 +88,22 @@ public class Sign {
         return jwt;
     }
 
+    /**
+     * 生成 token
+     *
+     * @param userId
+     * @param signingToken:签名中的 secret
+     * @param support:角色
+     * @param duration:过期时间
+     * @return
+     */
     public static String generateSessionToken(String userId, String signingToken, boolean support, long duration) {
         if (StringUtils.isEmpty(signingToken)) {
             throw new ServiceException("No signing token present");
         }
         Algorithm algorithm = getAlgorithm(signingToken);
         String token = JWT.create()
+                // 声明的算法
                 .withClaim(CLAIM_USER_ID, userId)
                 .withClaim(CLAIM_SUPPORT, support)
                 .withExpiresAt(new Date(System.currentTimeMillis() + duration))

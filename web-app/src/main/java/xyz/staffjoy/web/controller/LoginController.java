@@ -91,7 +91,8 @@ public class LoginController {
                 }
             }
 
-            if (account != null) { // login success
+            if (account != null) {
+                // login success
                 // set cookie
                 Sessions.loginUser(account.getId(),
                         account.isSupport(),

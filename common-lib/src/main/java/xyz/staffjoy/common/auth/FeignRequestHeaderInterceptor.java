@@ -13,8 +13,10 @@ public class FeignRequestHeaderInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
+        // 关键在于从 AuthContext 上下文中获取用户 id
         String userId = AuthContext.getUserId();
         if (!StringUtils.isEmpty(userId)) {
+            // 通过 requestTemplate 继续向后传递
             requestTemplate.header(AuthConstant.CURRENT_USER_HEADER, userId);
         }
     }

@@ -68,6 +68,7 @@ public class AuthRequestInterceptor implements PreForwardRequestInterceptor {
 
             this.checkBannedUsers(session.getUserId());
 
+            // 设置当前用户
             headers.set(AuthConstant.CURRENT_USER_HEADER, session.getUserId());
         } else {
             // prevent hacking
@@ -137,10 +138,17 @@ public class AuthRequestInterceptor implements PreForwardRequestInterceptor {
         }
     }
 
+    /**
+     * 获取 session
+     *
+     * @param request
+     * @return
+     */
     private Session getSession(HttpServletRequest request) {
         String token = Sessions.getToken(request);
         if (token == null) return null;
         try {
+            // 根据 token 解签
             DecodedJWT decodedJWT = Sign.verifySessionToken(token, signingSecret);
             String userId = decodedJWT.getClaim(Sign.CLAIM_USER_ID).asString();
             boolean support = decodedJWT.getClaim(Sign.CLAIM_SUPPORT).asBoolean();

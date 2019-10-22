@@ -18,31 +18,41 @@ import xyz.staffjoy.common.api.ResultCode;
 import xyz.staffjoy.common.auth.AuthConstant;
 import xyz.staffjoy.company.dto.CompanyDto;
 import xyz.staffjoy.company.dto.CompanyList;
-import xyz.staffjoy.company.dto.ListCompanyResponse;
 import xyz.staffjoy.company.dto.GenericCompanyResponse;
+import xyz.staffjoy.company.dto.ListCompanyResponse;
 import xyz.staffjoy.company.service.CompanyService;
-
-import static org.assertj.core.api.Java6Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
 import java.util.TimeZone;
 import java.util.UUID;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
+// 自动配置 MockMvc
 @AutoConfigureMockMvc
 public class CompanyControllerUnitTest {
 
+    /**
+     * 主要测试工具:测试输入与输出
+     */
     @Autowired
     MockMvc mockMvc;
 
+    /**
+     * 由于依赖 CompanyService，所以使用 mock 解除依赖
+     */
     @MockBean
     CompanyService companyService;
 
+    /**
+     * 序列化对象
+     */
     @Autowired
     ObjectMapper objectMapper;
 
@@ -64,6 +74,7 @@ public class CompanyControllerUnitTest {
     @Test()
     public void testCreateCompanyAuthorizeMissing() throws Exception {
 
+        // 没有传 header ，测试未授权状态
         MvcResult mvcResult = mockMvc.perform(post("/v1/company/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(newCompanyDto)))
@@ -78,6 +89,7 @@ public class CompanyControllerUnitTest {
     @Test
     public void testCreateCompanyPermissionDeniedException() throws Exception {
 
+        // header 不是对应允许的 ，测试未授权状态
         MvcResult mvcResult = mockMvc.perform(post("/v1/company/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(AuthConstant.AUTHORIZATION_HEADER, AuthConstant.AUTHORIZATION_COMPANY_SERVICE)

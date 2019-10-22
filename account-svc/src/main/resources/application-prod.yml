@@ -1,2 +1,3 @@
 logging:
+  # k8s 可以 mount 到特定的目录
   config: /etc/staffjoy/logback-spring.xml

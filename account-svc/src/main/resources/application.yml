@@ -4,6 +4,7 @@ spring:
   profiles:
     active: dev
   application:
+    # 应用名
     name: account-service
   datasource:
     url: ${ACCOUNT_DATASOURCE_URL}
@@ -20,6 +21,7 @@ staffjoy:
   common:
     sentry-dsn: ${SENTRY_DSN}
     deploy-env: ${DEPLOY:V2}
+  # jwt签名密码
   signing-secret: ${SIGNING_SECRET}
   email-service-endpoint: ${EMAIL_SERVICE_ENDPOINT:http://email-service:8080}
   company-service-endpoint: ${COMPANY_SERVICE_ENDPOINT:http://company-service:8080}

@@ -150,6 +150,7 @@ public class ServiceHelper {
             Map<String, String> params = Maps.newHashMap();
             params.put("user_id", userId);
 
+            // 测试时需要 spy
             User existing = User.find(params);
 
             if (existing != null) {

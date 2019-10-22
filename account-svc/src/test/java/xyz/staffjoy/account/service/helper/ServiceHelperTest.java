@@ -43,6 +43,9 @@ public class ServiceHelperTest {
     @Mock
     private EnvConfig envConfig;
 
+    /**
+     * 使用的 Spy：依赖的其他的bean(类)
+     */
     @InjectMocks
     @Spy
     private ServiceHelper serviceHelper;
@@ -60,6 +63,9 @@ public class ServiceHelperTest {
         assertThat(serviceHelper.isAlmostSameInstant(now, haveSecondLater)).isTrue();
     }
 
+    /**
+     * 使用的 Spy
+     */
     @Test
     public void testSyncUserAsync() {
         Account account = Account.builder()

@@ -18,7 +18,10 @@ import java.time.ZoneId;
 
 import static org.junit.Assert.*;
 
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.NONE)
+/**
+ * SpringBootTest.WebEnvironment.NONE 不引入 web，测试更快
+ */
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RunWith(SpringRunner.class)
 public class AccountRepoTest {
 
@@ -30,6 +33,9 @@ public class AccountRepoTest {
 
     private Account newAccount;
 
+    /**
+     * 测试前先把数据清空【好习惯】
+     */
     @Before
     public void setUp() {
         newAccount = Account.builder()
@@ -166,10 +172,13 @@ public class AccountRepoTest {
         assertNotNull(foundAccountSecret);
         assertEquals(newAccount.getId(), foundAccountSecret.getId());
         assertEquals(newAccount.isConfirmedAndActive(), foundAccountSecret.isConfirmedAndActive());
-        assertEquals(passwordHash, foundAccountSecret.getPasswordHash() );
+        assertEquals(passwordHash, foundAccountSecret.getPasswordHash());
 
     }
 
+    /**
+     * 测试前先把数据清空【好习惯】
+     */
     @After
     public void destroy() {
         accountRepo.deleteAll();

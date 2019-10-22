@@ -1,4 +1,5 @@
 # ****** H2 In Memory Database Connection Info *******
+# 使用内存数据库:h2
 spring:
   application:
     name: account-service

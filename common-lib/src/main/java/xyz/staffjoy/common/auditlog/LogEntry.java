@@ -4,6 +4,9 @@ import com.github.structlog4j.IToLog;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * 结构化和审计日志 javabean
+ */
 @Data
 @Builder
 public class LogEntry implements IToLog {
@@ -19,7 +22,7 @@ public class LogEntry implements IToLog {
 
     @Override
     public Object[] toLog() {
-        return new Object[] {
+        return new Object[]{
                 "auditlog", "true",
                 "currentUserId", currentUserId,
                 "companyId", companyId,
