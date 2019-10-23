@@ -1,32 +1,41 @@
 # https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html
 apiVersion: extensions/v1beta1
+# 定义发布类型
 kind: Deployment
 metadata:
   name: account-svc-deployment
 spec:
+  # 副本数量
   replicas: 1
+  # 发布模板
   template:
     metadata:
+      # 标签
       labels:
         app: account-svc
         env: test
     spec:
+      # 镜像
       containers:
         - name: account-svc
           image: boboweike/account-svc
+          # 不从远程拉取（使用缓存）
           imagePullPolicy: Never
           ports:
             - name: http-port
               containerPort: 80
           envFrom:
+            # 从 config.yaml 中获取配置
             - configMapRef:
                 name: common-config
 ---
 apiVersion: v1
+# 定义 Service,屏蔽ip、负载均衡
 kind: Service
 metadata:
   name: account-service
 spec:
+  # 关联 label，去寻址
   selector:
     app: account-svc
     env: test

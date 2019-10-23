@@ -4,19 +4,20 @@
     xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
- 
+
     <parent>
         <groupId>xyz.staffjoy</groupId>
         <artifactId>staffjoy-parent</artifactId>
         <version>1.0</version>
     </parent>
- 
+
     <artifactId>account-svc</artifactId>
     <version>1.0.0</version>
     <name>Staffjoy-Account-Svc</name>
     <url>https://www.staffjoy.xyz</url>
- 
+
     <dependencies>
+        <!--spring boot jpa-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -34,6 +35,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- 测试环境用 h2-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

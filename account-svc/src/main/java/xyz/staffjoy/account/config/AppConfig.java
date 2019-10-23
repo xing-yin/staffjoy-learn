@@ -40,6 +40,11 @@ public class AppConfig {
         return executor;
     }
 
+    /**
+     * 账号保存哈希值
+     *
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

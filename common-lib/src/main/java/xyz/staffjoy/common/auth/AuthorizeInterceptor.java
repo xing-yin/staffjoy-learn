@@ -18,7 +18,8 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Authorize authorize = handlerMethod.getMethod().getAnnotation(Authorize.class);
         if (authorize == null) {
-            return true; // no need to authorize
+            // no need to authorize
+            return true;
         }
 
         String[] allowedHeaders = authorize.value();
