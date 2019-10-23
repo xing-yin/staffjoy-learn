@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
-
 @Component
 @ConfigurationProperties(prefix="staffjoy")
 @Data
@@ -17,6 +15,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class AppProps {
 
+    /**
+     * 强制发邮件
+     */
     private boolean forceEmailPreference;
 
 }

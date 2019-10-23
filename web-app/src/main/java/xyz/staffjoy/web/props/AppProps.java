@@ -10,12 +10,15 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotNull;
 
 @Component
-@ConfigurationProperties(prefix="staffjoy")
+@ConfigurationProperties(prefix = "staffjoy")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppProps {
+    /**
+     * 防止机器人登录
+     */
     @NotNull
     private String recaptchaPublic;
     @NotNull

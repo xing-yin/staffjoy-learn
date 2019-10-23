@@ -10,9 +10,16 @@ import xyz.staffjoy.whoami.dto.GetIntercomSettingResponse;
 
 @FeignClient(name = WhoAmIConstant.SERVICE_NAME, path = "/v1", url = "${staffjoy.whoami-service-endpoint}")
 public interface WhoAmIClient {
+
     @GetMapping
     FindWhoAmIResponse findWhoAmI(@RequestHeader(AuthConstant.AUTHORIZATION_HEADER) String authz);
 
+    /**
+     * 与 intercom 客服的 sass 服务集成
+     *
+     * @param authz
+     * @return
+     */
     @GetMapping(value = "/intercom")
     GetIntercomSettingResponse getIntercomSettings(@RequestHeader(AuthConstant.AUTHORIZATION_HEADER) String authz);
 }

@@ -4,20 +4,21 @@
     xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
- 
+
     <parent>
         <groupId>xyz.staffjoy</groupId>
         <artifactId>staffjoy-parent</artifactId>
         <version>1.0</version>
     </parent>
- 
+
     <artifactId>mail-svc</artifactId>
     <name>Staffjoy-Mail-Svc</name>
     <version>1.0.0</version>
     <description>Mail project for Staffjoy microservices demo</description>
- 
+
     <dependencies>
 
+        <!--需要使用阿里云的邮件服务-->
         <!--https://help.aliyun.com/document_detail/29459.html-->
         <dependency>
             <groupId>com.aliyun</groupId>

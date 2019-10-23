@@ -2,6 +2,9 @@ package xyz.staffjoy.web.view;
 
 import lombok.*;
 
+/**
+ * 页面
+ */
 @Getter
 @Setter
 @Builder

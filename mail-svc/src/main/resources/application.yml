@@ -10,5 +10,6 @@ staffjoy:
   common:
     sentry-dsn: ${SENTRY_DSN}
     deploy-env: ${DEPLOY:V2}
+  # 借助 @ConfigurationProperties 绑定到 AppProps 类的属性中
   aliyun-access-key: ${ALIYUN_ACCESS_KEY}
   aliyun-access-secret: ${ALIYUN_ACCESS_SECRET}

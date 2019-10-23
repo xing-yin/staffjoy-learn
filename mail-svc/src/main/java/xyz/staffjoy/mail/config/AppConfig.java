@@ -27,6 +27,11 @@ public class AppConfig {
     @Autowired
     AppProps appProps;
 
+    /**
+     * 处理化阿里云
+     *
+     * @return
+     */
     @Bean
     public IAcsClient acsClient() {
         IClientProfile profile = DefaultProfile.getProfile(MailConstant.ALIYUN_REGION_ID,
@@ -35,7 +40,7 @@ public class AppConfig {
         return client;
     }
 
-    @Bean(name=ASYNC_EXECUTOR_NAME)
+    @Bean(name = ASYNC_EXECUTOR_NAME)
     public Executor asyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(3);

@@ -45,6 +45,7 @@ public class StaffjoyConfig implements WebMvcConfigurer {
 
     /**
      * sentry
+     *
      * @return
      */
     @Bean
@@ -71,6 +72,9 @@ public class StaffjoyConfig implements WebMvcConfigurer {
         return new FeignRequestHeaderInterceptor();
     }
 
+    /**
+     * 初始化 结构化日志
+     */
     @PostConstruct
     public void init() {
         // 初始化 结构化日志

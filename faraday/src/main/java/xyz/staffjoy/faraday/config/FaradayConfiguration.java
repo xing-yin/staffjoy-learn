@@ -50,6 +50,12 @@ public class FaradayConfiguration {
         this.assetLoader = assetLoader;
     }
 
+    /**
+     * 反向代理注册
+     *
+     * @param proxyFilter
+     * @return
+     */
     @Bean
     public FilterRegistrationBean<ReverseProxyFilter> faradayReverseProxyFilterRegistrationBean(
             ReverseProxyFilter proxyFilter) {
@@ -118,8 +124,8 @@ public class FaradayConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public MappingsProvider faradayConfigurationMappingsProvider(EnvConfig envConfig,
-                                                    MappingsValidator mappingsValidator,
-                                                    HttpClientProvider httpClientProvider) {
+                                                                 MappingsValidator mappingsValidator,
+                                                                 HttpClientProvider httpClientProvider) {
         if (faradayProperties.isEnableProgrammaticMapping()) {
             return new ProgrammaticMappingsProvider(
                     envConfig, serverProperties,
@@ -145,6 +151,17 @@ public class FaradayConfiguration {
         return new MappingsValidator();
     }
 
+    /**
+     * 请求转发
+     *
+     * @param httpClientProvider
+     * @param mappingsProvider
+     * @param loadBalancer
+     * @param meterRegistry
+     * @param traceInterceptor
+     * @param responseInterceptor
+     * @return
+     */
     @Bean
     @ConditionalOnMissingBean
     public RequestForwarder faradayRequestForwarder(

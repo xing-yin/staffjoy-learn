@@ -37,6 +37,7 @@ public class SmsController {
     })
     public BaseResponse send(@RequestBody @Valid SmsRequest smsRequest) {
 
+        // 白名单
         if (appProps.isWhiteListOnly()) {
             String whiteList = appProps.getWhiteListPhoneNumbers();
             boolean allowedToSend = !StringUtils.isEmpty(whiteList)
