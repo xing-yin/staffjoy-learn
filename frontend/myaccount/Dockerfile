@@ -16,9 +16,9 @@ RUN npm install
 RUN npm rebuild node-sass
 RUN npm run build
 
-RUN ls /build/myaccount/dist
+RUN ls /build/ /dist
 
-# 镜像2:将上面到镜像拷贝到此镜像中
+# 镜像2:将上面到镜像 build 的资源拷贝到此镜像中（主要是生成的静态文件拷贝到 nginx）
 FROM nginx
 EXPOSE 80
 COPY --from=builder /build/myaccount/dist /usr/share/nginx/html

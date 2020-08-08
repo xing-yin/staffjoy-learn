@@ -35,6 +35,6 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      # 暴露端口（见图）
+      # 暴露端口（见图），需要对外(NodePort)
       nodePort: 30001
   type: NodePort

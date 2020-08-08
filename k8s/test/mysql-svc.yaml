@@ -7,6 +7,7 @@ spec:
   type: ClusterIP
   ports:
     - port: 3306
+#      转发到本机端口
       targetPort: 3306
 ---
 # https://confluence.atlassian.com/jirakb/configuring-database-connection-results-in-error-host-xxxxxxx-is-not-allowed-to-connect-to-this-mysql-server-358908249.html

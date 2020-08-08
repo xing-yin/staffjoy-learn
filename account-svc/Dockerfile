@@ -1,3 +1,4 @@
+# 基础镜像
 FROM java:8-jdk-alpine
 
 # 将生成的镜像拷贝到 /usr/app/ 目录中

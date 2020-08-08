@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthContext {
 
     private static String getRequetHeader(String headerName) {
-        // 通过 RequestContextHolder 获取请求属性信息
+        // 通过 RequestContextHolder 获取请求属性信息(spring 提供的一种机制)
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();

@@ -1,6 +1,6 @@
-# https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html
+ # https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html
 apiVersion: extensions/v1beta1
-# 定义发布类型
+# 定义发布类型（Deployment 底层基于 replicaSets 管理多个 pod）
 kind: Deployment
 metadata:
   name: account-svc-deployment
@@ -10,7 +10,7 @@ spec:
   # 发布模板
   template:
     metadata:
-      # 标签
+      # 标签:通过 label 与下面的 Service 关联起来
       labels:
         app: account-svc
         env: test
@@ -19,7 +19,7 @@ spec:
       containers:
         - name: account-svc
           image: boboweike/account-svc
-          # 不从远程拉取（使用缓存）
+          # 不从远程拉取（使用本地缓存）
           imagePullPolicy: Never
           ports:
             - name: http-port
