@@ -41,4 +41,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
+  # 告诉阿里云申请一个 LB
   type: LoadBalancer

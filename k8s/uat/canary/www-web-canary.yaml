@@ -1,3 +1,4 @@
+# 金丝雀发布演示
 # https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -10,10 +11,12 @@ spec:
       labels:
         app: www-svc
         env: uat
+        # 一部分流量导航到这部分
         track: canary
     spec:
       containers:
         - name: www-svc
+          # 新镜像叫 blue,老镜像叫 www-svc：lastest
           image: boboweike/www-svc:blue
           ports:
             - name: http-port

@@ -21,6 +21,7 @@ spec:
             - configMapRef:
                 name: common-config
           volumeMounts:
+          # 日志的配置可以 mount 到 k8s 特定的目录(支持在 k8s 里动态修改)
             - name: logback-config-volume
               mountPath: /etc/staffjoy
       volumes:

@@ -1,3 +1,4 @@
+# 可以利用 k8s configmap 动态调整配置
 apiVersion: v1
 kind: ConfigMap
 metadata:
