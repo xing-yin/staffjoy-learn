@@ -35,6 +35,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * 组件测试示例演示
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -99,7 +102,7 @@ public class LoginControllerTest {
                 .thenReturn(BaseResponse.builder().message("user synced").build());
 
         MvcResult mvcResult = mockMvc.perform(post("/login")
-                ).andExpect(status().is3xxRedirection())
+        ).andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:" +
                         HelperService.buildUrl("http", "app." + envConfig.getExternalApex())))
                 .andReturn();
@@ -175,7 +178,8 @@ public class LoginControllerTest {
                 .andExpect(content().string(containsString(email)))
                 .andExpect(content().string(containsString("Sorry, no account was found with that email and password.")))
                 .andReturn();
-        log.info(mvcResult.getResponse().getContentAsString());    }
+        log.info(mvcResult.getResponse().getContentAsString());
+    }
 
     @Test
     public void testIsValidSub() {
